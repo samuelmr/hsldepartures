@@ -38,16 +38,14 @@
   }
  }
 
- $json = json_encode($deps);
+ $content = json_encode($deps);
  header('Access-Control-Allow-Origin: *');
  header('Content-Type: application/json');
- header('Content-Length: '.strlen($json));
  if (in_array('gzip', explode(',', $_SERVER['HTTP_ACCEPT_ENCODING']))) {
   header('Content-Encoding: gzip');
-  echo gzencode($json);
+  $content = gzencode($content);
  }
- else {
-  echo $json;
- }
+ header('Content-Length: '.strlen($content));
+ echo $content;
 
 ?>
